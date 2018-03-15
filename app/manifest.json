@@ -1,0 +1,63 @@
+{
+  "name": "__MSG_appName__",
+  "version": "0.0.2",
+  "manifest_version": 2,
+  "description": "__MSG_appDescription__",
+  "icons": {
+    "16": "images/icon-16.png",
+    "128": "images/icon-128.png"
+  },
+  "default_locale": "en",
+  "background": {
+    "scripts": [
+      "scripts/background.js"
+    ]
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://k2b-bulk.ebay.com/ws/eBayISAPI.dll?EditSalesRecord*"
+      ],
+      "js": [
+        "jquery-3.3.1.min.js",
+        "scripts/ebay.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://www.amazon.com/gp/buy*"
+      ],
+      "js": [
+        "jquery-3.3.1.min.js",
+        "scripts/amazon.js"
+      ]
+    },
+    {
+      "matches": [
+        "http://offer.ebay.com/ws/eBayISAPI.dll?ViewBidsLogin*"
+      ],
+      "js": [
+        "lodash.min.js",
+        "jquery-3.3.1.min.js",
+        "moment.min.js",
+        "Chart.min.js",
+        "scripts/chart.js"
+      ]
+    }
+  ],
+  "permissions": [
+    "storage",
+    "tabs",
+    "https://k2b-bulk.ebay.com/ws/eBayISAPI.dll?EditSalesRecord*",
+    "https://www.amazon.com/gp/buy*",
+    "http://offer.ebay.com/ws/eBayISAPI.dll?ViewBidsLogin*",
+    "clipboardWrite"
+  ],
+  "page_action": {
+    "default_icon": {
+      "19": "images/icon-19.png",
+      "38": "images/icon-38.png"
+    },
+    "default_title": "merced"
+  }
+}
