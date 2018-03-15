@@ -1,33 +1,48 @@
-"use strict";
-
-function drawChart(t) {
-  let e = document.getElementById("myChart");
-  e.height = 300;
-  let a = _.map(_.groupBy(t, function (t) {
+const build = (t) => {
+  return _.map(_.groupBy(t, function (t) {
     return moment(t.date).format("MM/DD/YYYY")
   }), function (t, e) {
     let a = t.reduce(function (t, e) {
       return t.quantity = t.quantity + 1, t.price = e.price, t
     }, {quantity: 0, price: 0}), r = a.quantity, i = a.price;
     return {price: i, quantity: r, date: e}
-  }), r = {
+  })
+};
+
+function drawChart(t) {
+  let e = document.getElementById("myChart");
+  e.height = 300;
+  let data = build(t);
+
+  const saleData = data.map(function (t) {
+    return t.quantity
+  });
+  const priceData = data.map(function (t) {
+    return t.price
+  });
+
+  const lines = 5;
+  const maxSale = Math.max(...saleData);
+  const saleStep = Math.round(maxSale/lines);
+  const maxSaleAxes = Math.round(maxSale/saleStep)*saleStep;
+
+  const maxPrice = Math.max(...priceData);
+  const priceStep = Math.round(maxPrice/lines);
+
+  const config = {
     type: "line",
     data: {
-      labels: a.map(function (t) {
+      labels: data.map(function (t) {
         return moment(t.date, "MM/DD/YYYY").toDate()
       }), datasets: [{
-        data: a.map(function (t) {
-          return t.quantity
-        }),
+        data: saleData,
         backgroundColor: "rgba(255, 99, 132, 0.2)",
         borderColor: "rgba(255,99,132,0.8)",
         label: "Sales",
         yAxisID: "sales"
       }, {
         fill: !1,
-        data: a.map(function (t) {
-          return t.price
-        }),
+        data: priceData,
         backgroundColor: "rgba(54, 162, 235, 0.2)",
         borderColor: "rgba(54, 162, 235, 0.8)",
         label: "Price",
@@ -42,15 +57,31 @@ function drawChart(t) {
           gridLines: {display: !1},
           time: {max: moment().toDate(), min: moment().subtract(30, "days").toDate(), unit: "day", round: !0}
         }],
-        yAxes: [{id: "sales", ticks: {beginAtZero: !0}, gridLines: {display: !1}, position: "left"}, {
+        yAxes: [
+          {
+            id: "sales",
+            ticks: {
+              beginAtZero: !0,
+              stepSize: saleStep,
+              max: maxSaleAxes
+            },
+            position: "left",
+            gridLines: {
+              display: false
+            }
+          }, {
           id: "price",
-          ticks: {beginAtZero: !0},
+            ticks: {
+              beginAtZero: !0,
+              stepSize: priceStep
+            },
+          gridLines: {display:true},
           position: "right"
         }]
       }
     }
   };
-  new Chart(e, r)
+  new Chart(e, config)
 }
 
 $(document).ready(function () {
