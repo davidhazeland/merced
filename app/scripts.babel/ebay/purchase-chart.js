@@ -70,4 +70,4 @@ $(document).ready(function () {
     return e.isValid() && e.isAfter(i)
   }))
 });
-//# sourceMappingURL=chart.js.map
+//# sourceMappingURL=purchase-chart.js.map

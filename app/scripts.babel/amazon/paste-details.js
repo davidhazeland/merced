@@ -17,4 +17,4 @@ $(document).ready(function () {
 let setValue = function (e, t) {
   $("[name='" + e + "']").val(t)
 };
-//# sourceMappingURL=amazon.js.map
+//# sourceMappingURL=paste-details.js.map

@@ -47,4 +47,4 @@ let getValue = function (e) {
     copy(e), console.log(e), console.log("Data saved")
   })
 };
-//# sourceMappingURL=ebay.js.map
+//# sourceMappingURL=copy-details.js.map

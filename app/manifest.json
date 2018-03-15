@@ -20,7 +20,7 @@
       ],
       "js": [
         "jquery-3.3.1.min.js",
-        "scripts/ebay.js"
+        "scripts/ebay/copy-details.js"
       ]
     },
     {
@@ -29,7 +29,7 @@
       ],
       "js": [
         "jquery-3.3.1.min.js",
-        "scripts/amazon.js"
+        "scripts/amazon/paste-details.js"
       ]
     },
     {
@@ -41,7 +41,7 @@
         "jquery-3.3.1.min.js",
         "moment.min.js",
         "Chart.min.js",
-        "scripts/chart.js"
+        "scripts/ebay/purchase-chart.js"
       ]
     }
   ],
