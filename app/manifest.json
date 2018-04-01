@@ -43,6 +43,32 @@
         "Chart.min.js",
         "scripts/ebay/purchase-chart.js"
       ]
+    },
+    {
+      "matches": [
+        "https://*.zikanalytics.com/SearchCompetitor/Index*"
+      ],
+      "js": [
+        "firebase-app.js",
+        "firebase-database.js",
+        "lodash.min.js",
+        "jquery-3.3.1.min.js",
+        "datatables.min.js",
+        "scripts/zik/competitor.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://*.zikanalytics.com/Analyze/Index*"
+      ],
+      "js": [
+        "firebase-app.js",
+        "firebase-database.js",
+        "lodash.min.js",
+        "jquery-3.3.1.min.js",
+        "datatables.min.js",
+        "scripts/zik/product.js"
+      ]
     }
   ],
   "permissions": [
@@ -51,6 +77,7 @@
     "https://k2b-bulk.ebay.com/ws/eBayISAPI.dll?EditSalesRecord*",
     "https://www.amazon.com/gp/buy*",
     "http://offer.ebay.com/ws/eBayISAPI.dll?ViewBidsLogin*",
+    "https://www.zikanalytics.com/*",
     "clipboardWrite"
   ],
   "page_action": {
