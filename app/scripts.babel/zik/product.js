@@ -18,5 +18,5 @@ $(document).ready(function () {
         $(`td[value='${seller}']`).css('background-color', 'yellow');
       })
     });
-  }, 5000)
+  }, 0)
 });

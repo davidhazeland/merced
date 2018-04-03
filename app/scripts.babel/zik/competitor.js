@@ -43,11 +43,16 @@ $(document).ready(function () {
 
     const idList = ci();
 
+    if (!username) {
+      return;
+    }
     if (idList) {
       database.ref('/sellers/' + username).set(idList);
       console.log('synced');
     } else {
-      database.ref('/sellers/' + username).set({});
+      database.ref('/sellers/' + username).set({
+        isSynced: true
+      });
       console.log('nothing to sync');
     }
   }, 5000)
