@@ -11,8 +11,8 @@ $(document).ready(function () {
 
   setTimeout(() => {
     const database = firebase.database();
-    database.ref('/sellers').once('value').then(snapshot => {
-      const sellers = _.keys(snapshot.val());
+    database.ref('/seller-list').once('value').then(snapshot => {
+      const sellers = snapshot.val();
 
       sellers.map((seller) => {
         $(`td[value='${seller}']`).css('background-color', 'yellow');
