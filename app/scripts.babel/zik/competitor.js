@@ -92,11 +92,15 @@ $(document).ready(function () {
       }
     });
     async.parallelLimit(tasks, 20, (err, results) => {
+      let message;
       if (err) {
         console.log(err);
+        message = $(`<span>${err.message}</span>`);
+      } else {
+        console.log(results);
+        message = $(`<span>Products Synced (${results.length})</span>`);
       }
-      console.log(results);
-      alert('Products synced.')
+      $("#info").css('display', 'block').append(message);
     })
   }, 5000)
 });
