@@ -49,6 +49,7 @@
         "https://*.zikanalytics.com/SearchCompetitor/Index*"
       ],
       "js": [
+        "async.min.js",
         "firebase-app.js",
         "firebase-database.js",
         "lodash.min.js",
