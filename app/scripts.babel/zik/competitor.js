@@ -64,7 +64,8 @@ $(document).ready(function () {
   setTimeout(function() {
     const itemList = ci();
     if (!itemList) {
-      console.log('nothing to sync');
+      const message = $(`<span>Nothing to sync</span>`);
+      $("#info").css('display', 'block').append(message);
       return;
     }
     const tasks = itemList.map(item => {
