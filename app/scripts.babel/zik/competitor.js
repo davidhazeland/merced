@@ -92,7 +92,7 @@ $(document).ready(function () {
           })
       }
     });
-    async.parallelLimit(tasks, 20, (err, results) => {
+    async.parallelLimit(tasks, 10, (err, results) => {
       let message;
       if (err) {
         console.log(err);
