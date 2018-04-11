@@ -3,7 +3,7 @@ const compareDate = (a, b) => {
   return Math.ceil(timeDiff / (1000 * 3600 * 24));
 };
 
-const ci = (sale = 10, price = 5, date = 365) => {
+const ci = (sale = 10, price = 5, date = 3650) => {
   const data = $('#datatable-responsive').dataTable().fnGetData();
   const filtered = data.filter(row => {
     const validSale = parseFloat(row[3]) >= sale;
@@ -37,71 +37,79 @@ function getUrlVars()
   return vars;
 }
 
-const config = {
-  apiKey: "AIzaSyCh2JzXMnYajBzt7ytjHVe_Q6sXNFLb6YE",
-  authDomain: "merced-13.firebaseapp.com",
-  databaseURL: "https://merced-13.firebaseio.com",
-  projectId: "merced-13",
-  storageBucket: "merced-13.appspot.com",
-  messagingSenderId: "1094482201047"
-};
-firebase.initializeApp(config);
-const database = firebase.database();
+function syncSeller() {
+  const config = {
+    apiKey: "AIzaSyCh2JzXMnYajBzt7ytjHVe_Q6sXNFLb6YE",
+    authDomain: "merced-13.firebaseapp.com",
+    databaseURL: "https://merced-13.firebaseio.com",
+    projectId: "merced-13",
+    storageBucket: "merced-13.appspot.com",
+    messagingSenderId: "1094482201047"
+  };
+  firebase.initializeApp(config);
+  const database = firebase.database();
 
-database.ref('/seller-list').once('value').then(snapshot => {
-  const sellers = snapshot.val() || [];
+  database.ref('/seller-list').once('value').then(snapshot => {
+    const sellers = snapshot.val() || [];
 
-  const {Competitor} = getUrlVars();
-  database.ref('/seller-list').set(_.uniq([
-    ...sellers,
-    Competitor
-  ]));
+    const {Competitor} = getUrlVars();
+    database.ref('/seller-list').set(_.uniq([
+      ...sellers,
+      Competitor
+    ]));
 
-  console.log('Seller synced');
-});
+    console.log('Seller synced');
+  });
+}
+
+function syncProduct () {
+  const itemList = ci();
+  if (!itemList) {
+    const message = $(`<span>Nothing to sync</span>`);
+    $("#info").css('display', 'block').append(message);
+    return;
+  }
+  const tasks = itemList.map(item => {
+    return (callback) => {
+      // Default options are marked with *
+      return fetch('https://seed.dropist.io/api/items', {
+        body: JSON.stringify({
+          item_id: item.id
+        }),
+        headers: {
+          'accept': 'application/json',
+          'content-type': 'application/json',
+        },
+        method: 'POST'
+      })
+        .then(response => {
+          return response.json();
+        })
+        .catch(err => {
+          callback(err);
+        })
+        .then(result => {
+          callback(null, result)
+        })
+    }
+  });
+  async.parallelLimit(tasks, 10, (err, results) => {
+    let message;
+    if (err) {
+      console.log(err);
+      message = $(`<span>${err.message}</span>`);
+    } else {
+      console.log(results);
+      message = $(`<span>Products Synced (${results.length})</span>`);
+    }
+    $("#info").css('display', 'block').append(message);
+  })
+}
 
 $(document).ready(function () {
   setTimeout(function() {
-    const itemList = ci();
-    if (!itemList) {
-      const message = $(`<span>Nothing to sync</span>`);
-      $("#info").css('display', 'block').append(message);
-      return;
-    }
-    const tasks = itemList.map(item => {
-      return (callback) => {
-        // Default options are marked with *
-        return fetch('https://seed.dropist.io/api/items', {
-          body: JSON.stringify({
-            item_id: item.id
-          }),
-          headers: {
-            'accept': 'application/json',
-            'content-type': 'application/json',
-          },
-          method: 'POST'
-        })
-          .then(response => {
-            return response.json();
-          })
-          .catch(err => {
-            callback(err);
-          })
-          .then(result => {
-            callback(null, result)
-          })
-      }
-    });
-    async.parallelLimit(tasks, 10, (err, results) => {
-      let message;
-      if (err) {
-        console.log(err);
-        message = $(`<span>${err.message}</span>`);
-      } else {
-        console.log(results);
-        message = $(`<span>Products Synced (${results.length})</span>`);
-      }
-      $("#info").css('display', 'block').append(message);
-    })
+    // syncProduct();
   }, 5000)
 });
+
+syncSeller();
