@@ -1,7 +1,9 @@
 function handlePasteClick() {
   chrome.storage.local.get("data", function (e) {
+    if (!e.data) return;
     let t = JSON.parse(e.data);
     setValue("enterAddressFullName", t.name), setValue("enterAddressAddressLine1", t.address1), setValue("enterAddressAddressLine2", t.address2), setValue("enterAddressCity", t.city), setValue("enterAddressStateOrRegion", t.province), setValue("enterAddressPostalCode", t.zip), setValue("enterAddressPhoneNumber", "" + t.phone1 + t.phone2 + t.phone3)
+    chrome.storage.local.set({data: ''});
   })
 }
 
