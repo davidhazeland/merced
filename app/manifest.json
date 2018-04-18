@@ -49,10 +49,20 @@
         "https://*.zikanalytics.com/SearchCompetitor/Index*"
       ],
       "js": [
-        "lib/async.min.js",
         "lib/firebase-app.js",
         "lib/firebase-database.js",
         "scripts/firebase/initial.js",
+        "lib/lodash.min.js",
+        "scripts/zik/sync-sellers.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://*.zikanalytics.com/SearchCompetitor/Index*"
+      ],
+      "js": [
+        "lib/async.min.js",
         "lib/lodash.min.js",
         "lib/jquery-3.3.1.min.js",
         "lib/datatables.min.js",
