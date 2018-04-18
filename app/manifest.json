@@ -19,7 +19,7 @@
         "https://k2b-bulk.ebay.com/ws/eBayISAPI.dll?EditSalesRecord*"
       ],
       "js": [
-        "jquery-3.3.1.min.js",
+        "lib/jquery-3.3.1.min.js",
         "scripts/ebay/copy-details.js"
       ]
     },
@@ -28,7 +28,7 @@
         "https://www.amazon.com/gp/buy*"
       ],
       "js": [
-        "jquery-3.3.1.min.js",
+        "lib/jquery-3.3.1.min.js",
         "scripts/amazon/paste-details.js"
       ]
     },
@@ -37,10 +37,10 @@
         "http://offer.ebay.com/ws/eBayISAPI.dll?ViewBidsLogin*"
       ],
       "js": [
-        "lodash.min.js",
-        "jquery-3.3.1.min.js",
-        "moment.min.js",
-        "Chart.min.js",
+        "lib/lodash.min.js",
+        "lib/jquery-3.3.1.min.js",
+        "lib/moment.min.js",
+        "lib/Chart.min.js",
         "scripts/ebay/purchase-chart.js"
       ]
     },
@@ -49,12 +49,14 @@
         "https://*.zikanalytics.com/SearchCompetitor/Index*"
       ],
       "js": [
-        "async.min.js",
-        "firebase-app.js",
-        "firebase-database.js",
-        "lodash.min.js",
-        "jquery-3.3.1.min.js",
-        "datatables.min.js",
+        "lib/async.min.js",
+        "lib/firebase-app.js",
+        "lib/firebase-database.js",
+        "scripts/firebase/initial.js",
+        "lib/lodash.min.js",
+        "lib/jquery-3.3.1.min.js",
+        "lib/datatables.min.js",
+        "scripts/zik/ci.js",
         "scripts/zik/competitor.js"
       ]
     },
@@ -63,11 +65,10 @@
         "https://*.zikanalytics.com/Analyze/Index*"
       ],
       "js": [
-        "firebase-app.js",
-        "firebase-database.js",
-        "lodash.min.js",
-        "jquery-3.3.1.min.js",
-        "datatables.min.js",
+        "lib/firebase-app.js",
+        "lib/firebase-database.js",
+        "scripts/firebase/initial.js",
+        "lib/jquery-3.3.1.min.js",
         "scripts/zik/product.js"
       ]
     }
