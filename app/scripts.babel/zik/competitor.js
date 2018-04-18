@@ -1,8 +1,48 @@
-$(document).ready(function () {
-  setTimeout(function() {
-    // syncProduct();
-  }, 5000)
-});
+const VALID_SELLER_PRODUCT_COUNT = 3;
+
+syncValidSeller();
+
+function syncValidSeller() {
+  const database = firebase.database();
+  database.ref('/valid-seller-list').once('value').then(snapshot => {
+    const sellers = snapshot.val() || [];
+
+    $(document).ready(function () {
+      setTimeout(function() {
+        const itemList = ci();
+
+        if (!itemList || itemList.length < VALID_SELLER_PRODUCT_COUNT) {
+          console.log('Nothing to sync.', itemList);
+        } else {
+          const {Competitor: seller} = getUrlVars();
+          const itemIdList = itemList.map(item => item.id);
+
+          const index = _.findIndex(sellers, s => s.name === seller);
+
+          if (index !== -1) {
+            sellers[index] = {
+              name: seller,
+              items: _.uniq([
+                ...sellers[index].items,
+                ...itemIdList
+              ])
+            };
+            database.ref('/valid-seller-list').set(sellers);
+          } else {
+            database.ref('/valid-seller-list').set([
+              ...sellers,
+              {
+                name: seller,
+                items: itemIdList
+              }
+            ]);
+          }
+          console.log(`Valid seller synced with ${itemIdList.length} items`);
+        }
+      }, 5000)
+    });
+  });
+}
 
 function syncProduct () {
   const itemList = ci();
