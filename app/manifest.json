@@ -16,7 +16,7 @@
   "content_scripts": [
     {
       "matches": [
-        "https://k2b-bulk.ebay.com/ws/eBayISAPI.dll?EditSalesRecord*"
+        "https://www.ebay.com/sh/ord/details?srn=*"
       ],
       "js": [
         "lib/jquery-3.3.1.min.js",

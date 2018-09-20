@@ -2,18 +2,19 @@
 
 function handleCopyClick(e) {
   e.preventDefault();
+  const addresses = $('#ship-address .address');
+  const hasAddress2 = addresses.length === 5;
+  const [zip, province, ...city]  = (hasAddress2 ? $(addresses[3]).text() : $(addresses[2]).text()).split(' ').reverse();
+
   saveData({
-    name: getValue("buyercontactname"),
-    address1: getValue("buyeraddress1"),
-    address2: getValue("buyeraddress2"),
-    city: getValue("buyercity"),
-    province: getValue("buyerstateprovince"),
-    zip: getValue("buyerzip"),
-    country: getValue("buyercountry"),
-    phone1: getValue("dayphone1"),
-    phone2: getValue("dayphone2"),
-    phone3: getValue("dayphone3"),
-    phone4: getValue("dayphone4")
+    name: $(addresses[0]).text(),
+    address1: $(addresses[1]).text(),
+    address2: hasAddress2 ? $(addresses[2]).text() : '',
+    city: city.join(' '),
+    province: province,
+    zip: zip,
+    country: hasAddress2 ? $(addresses[4]).text() : $(addresses[3]).text(),
+    phone: $($('.purchase-details .info-item dd')[2]).text(),
   })
 }
 
@@ -38,13 +39,14 @@ function handleCopyGlobalClick(e) {
 $(document).ready(function () {
   let e = $('<input type="button" class="merced-copy buttonsm" value="Copy"/>'),
     a = $('<input type="button" class="merced-copy-global buttonsm" value="Copy"/>');
-  $("h3:contains('Buyer details')").append(e), $("h3:contains('Shipping Details')").append(a), $(".merced-copy").on("click", handleCopyClick), $(".merced-copy-global").on("click", handleCopyGlobalClick)
+  $("h2:contains('Shipping details')").append(e), $("h3:contains('x Details')").append(a), $(".merced-copy").on("click", handleCopyClick), $(".merced-copy-global").on("click", handleCopyGlobalClick)
 });
+
 let getValue = function (e) {
   return $("[name='" + e + "']").val()
 }, saveData = function (e) {
   chrome.storage.local.set({data: JSON.stringify(e)}, function () {
-    copy(e), console.log(e), console.log("Data saved")
+    console.log(e), console.log("Data saved")
   })
 };
 //# sourceMappingURL=copy-details.js.map
