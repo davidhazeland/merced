@@ -21,17 +21,14 @@ function handleCopyClick(e) {
 function handleCopyGlobalClick(e) {
   e.preventDefault();
   let a = $(".shreskin-edit-sales-record-title .help").parent().children(), t = {
-    name: $(a[0]).text(),
+    name: $('.buyer-details dd').html().split('<span class="user-id"')[0],
     address1: "1850 Airport Exchange Blvd #200",
-    address2: $(a[1]).text(),
+    address2: $($('#ship-address .address')[0]).text(),
     city: "Erlanger",
     province: "KY",
     zip: "41025",
     country: 1,
-    phone1: 1,
-    phone2: "",
-    phone3: "",
-    phone4: ""
+    phone: $($('.purchase-details .info-item dd')[2]).text()
   };
   saveData(t)
 }
@@ -39,7 +36,7 @@ function handleCopyGlobalClick(e) {
 $(document).ready(function () {
   let e = $('<input type="button" class="merced-copy buttonsm" value="Copy"/>'),
     a = $('<input type="button" class="merced-copy-global buttonsm" value="Copy"/>');
-  $("h2:contains('Shipping details')").append(e), $("h3:contains('x Details')").append(a), $(".merced-copy").on("click", handleCopyClick), $(".merced-copy-global").on("click", handleCopyGlobalClick)
+  $("h2:contains('Shipping details')").append(e), $(".title-wrapper:contains('Global Shipping Program')").append(a), $(".merced-copy").on("click", handleCopyClick), $(".merced-copy-global").on("click", handleCopyGlobalClick)
 });
 
 let getValue = function (e) {
